@@ -7,9 +7,9 @@
 [![codecov](https://codecov.io/gh/ShotaOchi/scorepeak/branch/master/graph/badge.svg)](https://codecov.io/gh/ShotaOchi/scorepeak)
 
 ## Introduction
-scorepeak is an R package for detecing peaks in univariate time series.
+scorepeak is an R package for peak detection in univariate time series.
 
-scorepeak provides peak functions, which enable us to detect peaks.
+scorepeak provides peak functions, which enable us to detect peaks in univariate time series.
 
 ## Installation
 you can install scorepeak from GitHub.
