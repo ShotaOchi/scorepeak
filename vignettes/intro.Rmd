@@ -25,6 +25,8 @@ pre {
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(warning=FALSE, message=FALSE, cache=FALSE, 
                comment=NA, verbose=TRUE, fig.width=7, fig.height=7, dev='jpeg',dev.args=list(quality=50))
+par_pre <- par(no.readonly = TRUE)
+par(lwd = 2)
 ```
 
 There are true peaks and false peaks (noise) in time series data. 
@@ -83,11 +85,24 @@ $\large S_2(k,i,T)=x_i-mean(N(k,i,T))$
 
 ### Type 3
 
-Type 3 of peak function $S_3$ computes the product of the signed distance of the $x_i$ from the average of $N'(k,iT)$ and the standard deviation of $N'(k,iT)$.
+Type 3 of peak function $S_3$ computes the product of the signed distance of the $x_i$ from the larger one of the average of $N^l(k,iT)$ and the average of $N^r(k,iT)$ and the standard deviation of $N'(k,iT)$.
 
-$\large S_3(k,i,T)=(x_i-mean(N'(k,i,T)))*s(N'(k,i,T))$
+$\large S_3(k,i,T)=(x_i-max(mean(N^l(k,i,T)), mean(N^r(k,i,T))))*s(N'(k,i,T))$
 
 ## Boundary Condition
+
+
+
+### Reflecting Boundary Condition
+
+
+
+### Periodic Boundary Condition
+
+
+
+### Discarding Boundary
+
 
 
 ## Example of Use
@@ -101,20 +116,8 @@ library(scorepeak)
 data("ecgca102")
 local_peaks <- detect_localmaxima(ecgca102)
 plot(ecgca102, type = "l")
-points(which(local_peaks), ecgca102[local_peaks], pch = 1, col = "red")
+points(which(local_peaks), ecgca102[local_peaks], pch = 19, col = "red")
 ```
-
-
-
-
-### Peak Detection
-
-
-
-### Time Series Segmentation
-
-Coefficient of Variation
-
 
 
 
@@ -128,14 +131,34 @@ However, you may need other peak function.
 
 You can build your peak function out of building blocks shown below.
 
+* max_neighbors: computes maximum of temporal neighbors
 
-## An example of Building New Peak Functions
+* min_neighbors: computes minimum of temporal neighbors
 
+* mean_neighbors: computes mean of temporal neighbors
 
+* sd_neighbors: computes standard deviation of temporal neighbors
 
+The above functions have the parameter side.
+
+side determines which temporal neighbors will be used in calculation.
+
+The valid values of side are shown below.
+
+* "right", "r": right temporal neighbors ($N^r(k,i,T)$)
+
+* "left", "l": : left temporal neighbors ($N^l(k,i,T)$)
+
+* "both", "b": left and right temporal neighbors ($N(k,i,T)$)
+
+* "all", "a": the data point and its left and right temporal neighbors ($N'(k,i,T)$)
 
 ## References
 
 Palshikar, Girish. "Simple algorithms for peak detection in time-series." Proc. 1st Int. Conf. Advanced Data Analysis, Business Analytics and Intelligence. Vol. 122. 2009.
 
 Goldberger AL, Amaral LAN, Glass L, Hausdorff JM, Ivanov PCh, Mark RG, Mietus JE, Moody GB, Peng C-K, Stanley HE. PhysioBank, PhysioToolkit, and PhysioNet: Components of a New Research Resource for Complex Physiologic Signals. Circulation 101(23):e215-e220 [Circulation Electronic Pages; http://circ.ahajournals.org/cgi/content/full/101/23/e215]; 2000 (June 13).
+
+```{r include = FALSE}
+par(par_pre)
+```
