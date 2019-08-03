@@ -4,11 +4,14 @@
 \alias{peak_functions}
 \alias{score_type1}
 \alias{score_type2}
+\alias{score_type3}
 \title{Peak Functions for Peak Detection in Univariate Time Series}
 \usage{
 score_type1(data, w, boundary = "reflecting")
 
 score_type2(data, w, boundary = "reflecting")
+
+score_type3(data, w, boundary = "reflecting")
 }
 \arguments{
 \item{data}{a numeric vector. Length of data must be greater than 1.}
@@ -27,6 +30,7 @@ scorepeak package provides several types of peak function. See the vignette "Int
 data("ecgca102")
 score_type1(ecgca102, 11)
 score_type2(ecgca102, 11)
+score_type3(ecgca102, 11)
 }
 \author{
 Shota Ochi

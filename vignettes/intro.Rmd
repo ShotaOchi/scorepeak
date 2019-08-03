@@ -83,14 +83,9 @@ $\large S_2(k,i,T)=x_i-mean(N(k,i,T))$
 
 ### Type 3
 
-Type 3 of peak function $S_3$ computes the signed distance of the $x_i$ from the average of $N'(k,iT)$ divided by the standard deviation of $N'(k,iT)$.
+Type 3 of peak function $S_3$ computes the product of the signed distance of the $x_i$ from the average of $N'(k,iT)$ and the standard deviation of $N'(k,iT)$.
 
-$\begin{equation}
-\large S_3(k,i,T)=\begin{cases}
-                   \dfrac{x_i-mean(N'(k,i,T))}{s(N'(k,i,T))} & s(N'(k,i,T))\neq0 \\
-                   0 & s(N'(k,i,T))=0
-                  \end{cases}
-\end{equation}$
+$\large S_3(k,i,T)=(x_i-mean(N'(k,i,T)))*s(N'(k,i,T))$
 
 ## Boundary Condition
 

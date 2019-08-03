@@ -11,6 +11,7 @@
 #' data("ecgca102")
 #' score_type1(ecgca102, 11)
 #' score_type2(ecgca102, 11)
+#' score_type3(ecgca102, 11)
 score_type1 <- function(data, w, boundary = "reflecting")
 {
   assert_data(data)
@@ -35,3 +36,14 @@ score_type2 <- function(data, w, boundary = "reflecting")
   data - mean_neighbors(data, w, "both", boundary)
 }
 
+#' @rdname peak_functions
+#' @export
+score_type3 <- function(data, w, boundary = "reflecting")
+{
+  assert_data(data)
+  w <- assert_window(w)
+  w <- assert_length_window(w, data)
+  assert_boundary(boundary)
+
+  (data - mean_neighbors(data, w, "all", boundary)) * sd_neighbors(data, w, "all", boundary)
+}
