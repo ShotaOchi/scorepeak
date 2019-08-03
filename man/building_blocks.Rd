@@ -29,14 +29,14 @@ sd_neighbors(data, w, side, boundary = "reflecting")
 a numeric vector
 }
 \description{
-Building Blocks of Peak Functions
+Computes max, min, mean, and standard deviation of temporal neighbors.
 }
 \examples{
 data("ecgca102")
-max_neighbors(ecgca102, 3, "all")
-min_neighbors(ecgca102, 3, "all")
-mean_neighbors(ecgca102, 3, "all")
-sd_neighbors(ecgca102, 3, "all")
+max_neighbors(ecgca102, 11, "all")
+min_neighbors(ecgca102, 11, "all")
+mean_neighbors(ecgca102, 11, "all")
+sd_neighbors(ecgca102, 11, "all")
 }
 \author{
 Shota Ochi

@@ -1,5 +1,7 @@
 #' Building Blocks of Peak Functions
 #'
+#' Computes max, min, mean, and standard deviation of temporal neighbors.
+#'
 #' @name building_blocks
 #' @inheritParams detect_localmaxima
 #' @param side determines which side of neighbors of data point will be used in calculation. "left", "l": left temporal neighbors, "right", "r": right temporal neighbors, "both", "b": left and right temporal neighbors, "all", "a": data point and its left and right temporal neighbors.
@@ -8,10 +10,10 @@
 #' @export
 #' @examples
 #' data("ecgca102")
-#' max_neighbors(ecgca102, 3, "all")
-#' min_neighbors(ecgca102, 3, "all")
-#' mean_neighbors(ecgca102, 3, "all")
-#' sd_neighbors(ecgca102, 3, "all")
+#' max_neighbors(ecgca102, 11, "all")
+#' min_neighbors(ecgca102, 11, "all")
+#' mean_neighbors(ecgca102, 11, "all")
+#' sd_neighbors(ecgca102, 11, "all")
 max_neighbors <- function(data, w, side, boundary = "reflecting")
 {
   assert_data(data)
