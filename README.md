@@ -9,7 +9,7 @@
 ## Introduction
 scorepeak is an R package for peak detection in univariate time series.
 
-scorepeak provides peak functions, which enable us to detect peaks in univariate time series.
+scorepeak provides peak functions, which enable us to detect peaks .
 
 ## Installation
 you can install scorepeak from GitHub.
