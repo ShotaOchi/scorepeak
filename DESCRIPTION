@@ -1,0 +1,26 @@
+Package: scorepeak
+Type: Package
+Title: Peak Functions for Peak Detection in Univariate Time Series
+Version: 0.1.0
+Authors@R: c(
+    person("Shota", "Ochi", email = "shotaochi1990@gmail.com", role = c("aut", "cre", "cph")))
+Maintainer: Shota Ochi <shotaochi1990@gmail.com>
+Description: Provides peak functions and its building blocks.
+             Peak functions enable us to detect peaks.
+License: GPL-3
+Depends: 
+    R (>= 3.5.0)
+Imports: 
+    checkmate (>= 1.9.1),
+    Rcpp (>= 1.0.0)
+Suggests:
+    knitr,
+    rmarkdown,
+    testthat (>= 2.0.0)
+URL: https://github.com/ShotaOchi/scorepeak
+BugReports: https://github.com/ShotaOchi/scorepeak/issues
+LinkingTo: Rcpp
+LazyData: true
+RoxygenNote: 6.1.1
+VignetteBuilder: knitr
+Encoding: UTF-8

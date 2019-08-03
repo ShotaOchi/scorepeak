@@ -1,0 +1,146 @@
+---
+title: "Introduction to scorepeak"
+author: "Shota Ochi"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Introduction to scorepeak}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+<style type="text/css">
+
+body, td {
+   font-size: 15px;
+}
+code.r{
+  font-size: 15px;
+}
+pre {
+  font-size: 15px
+}
+</style>
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(warning=FALSE, message=FALSE, cache=FALSE, 
+               comment=NA, verbose=TRUE, fig.width=7, fig.height=7, dev='jpeg',dev.args=list(quality=50))
+```
+
+There are true peaks and false peaks (noise) in time series data. 
+
+We need to formalize the notion of a peak to distinguish true peaks from false peaks.
+
+An approach is to define a peak function, which gives a score of a data point.
+
+The score indicates how high the possibility that the data point is a true peak is.
+
+We can classify a peak as true or false by the score.
+
+scorepeak package provides several peak functions and its building blocks.
+
+## Mathematical Notation
+
+$T=x_1,x_2,\cdots,x_n$: an univariate uniformly sampled time series data
+
+$x_i$: $i^{th}$ point in T
+
+$n$: length of time series data
+
+$l$: window size ($l\geq3$ and $l$ is odd)
+
+$k$: half of window size ($k=\frac{l-1}{2}$)
+
+$N^r(k,i,T)=<x_{i+1},x_{i+2},\cdots,x_{i+k}>$: the sequence of right temporal neighbors
+
+$N^l(k,i,T)=<x_{i-k},x_{i-k+1},\cdots,x_{i-1}>$: the sequence of left temporal neighbors
+
+$N(k,i,T)=N^r(k,i,T){\cdot}N^l(k,i,T)$: the sequence of left and right temporal neighbors ($\cdot$ denotes concatenation)
+
+$N'(k,i,T)=N^r(k,i,T){\cdot}\{x_i\}{\cdot}N^l(k,i,T)$: the sequence of the data point and its left and right temporal neighbors
+
+$max(A)$: maximum in a set $A$
+
+$min(A)$: minimum in a set $A$
+
+$mean(A)$: average of elements in a set $A$
+
+$s(A)$: standard deviation of elements in a set $A$
+
+## Peak Functions
+
+### Type 1
+
+Type 1 of peak function $S_1$ computes the average of (`r tolower(as.character(as.roman(1)))`) the maximum among the signed distances of $x_i$ from its right neighbors and (`r tolower(as.character(as.roman(2)))`) the maximum among the signed distance of $x_i$ from its left neighbors.
+
+$\large S_1(k,i,T)=\dfrac{max_{j{\in}N^l(k,i,T)}(x_i-x_j)+max_{j{\in}N^r(k,i,T)}(x_i-x_j)}{2}$
+
+### Type 2
+
+Type 2 of peak function $S_2$ computes the signed distance of the $x_i$ from the average of its left and right temporal neighbors.
+
+$\large S_2(k,i,T)=x_i-mean(N(k,i,T))$
+
+### Type 3
+
+Type 3 of peak function $S_3$ computes the signed distance of the $x_i$ from the average of $N'(k,iT)$ divided by the standard deviation of $N'(k,iT)$.
+
+$\begin{equation}
+\large S_3(k,i,T)=\begin{cases}
+                   \dfrac{x_i-mean(N'(k,i,T))}{s(N'(k,i,T))} & s(N'(k,i,T))\neq0 \\
+                   0 & s(N'(k,i,T))=0
+                  \end{cases}
+\end{equation}$
+
+## Boundary Condition
+
+
+## Example of Use
+
+See the data shown below. We can see many local peaks in the data.
+
+The red points indicate the local peaks.
+
+```{r}
+library(scorepeak)
+data("ecgca102")
+local_peaks <- detect_localmaxima(ecgca102)
+plot(ecgca102, type = "l")
+points(which(local_peaks), ecgca102[local_peaks], pch = 1, col = "red")
+```
+
+
+
+
+### Peak Detection
+
+
+
+### Time Series Segmentation
+
+Coefficient of Variation
+
+
+
+
+
+
+## Building Blocks of Peak Functions
+
+The peak functions shown above are useful.
+
+However, you may need other peak function.
+
+You can build your peak function out of building blocks shown below.
+
+
+## An example of Building New Peak Functions
+
+
+
+
+## References
+
+Palshikar, Girish. "Simple algorithms for peak detection in time-series." Proc. 1st Int. Conf. Advanced Data Analysis, Business Analytics and Intelligence. Vol. 122. 2009.
+
+Goldberger AL, Amaral LAN, Glass L, Hausdorff JM, Ivanov PCh, Mark RG, Mietus JE, Moody GB, Peng C-K, Stanley HE. PhysioBank, PhysioToolkit, and PhysioNet: Components of a New Research Resource for Complex Physiologic Signals. Circulation 101(23):e215-e220 [Circulation Electronic Pages; http://circ.ahajournals.org/cgi/content/full/101/23/e215]; 2000 (June 13).
