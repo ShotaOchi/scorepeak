@@ -19,9 +19,7 @@ score_type1 <- function(data, w, boundary = "reflecting")
   w <- assert_length_window(w, data)
   assert_boundary(boundary)
   
-  minima_left_temporal <- min_neighbors(data, w, "left", boundary)
-  minima_right_temporal <- min_neighbors(data, w, "right", boundary)
-  data - (minima_left_temporal + minima_right_temporal) / 2
+  data - (min_neighbors(data, w, "left", boundary) + min_neighbors(data, w, "right", boundary)) / 2
 }
 
 #' @rdname peak_functions
