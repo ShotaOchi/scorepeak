@@ -24,11 +24,12 @@ devtools::install_github("ShotaOchi/scorepeak")
 ```r
 library(scorepeak)
 data("ecgca102")
-a <- detect_localmaxima(ecgca102)
+lp <- detect_localmaxima(ecgca102, 13)
+score <- score_type1(ecgca102, 51)
+detected <- score > 0.03 & lp
 plot(ecgca102, type = "l")
-points(which(a), ecgca102[a], pch = 1, col = "red")
+points(which(detected), ecgca102[detected], pch = 19, col = "red")
 ```
-
 
 ## Contribution
 You're welcome to create issues for any bug report or suggestion on the [issues page](https://github.com/ShotaOchi/scorepeak/issues).
