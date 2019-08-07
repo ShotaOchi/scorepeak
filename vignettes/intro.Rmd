@@ -24,9 +24,7 @@ pre {
 
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(warning=FALSE, message=FALSE, cache=FALSE, 
-               comment=NA, verbose=TRUE, fig.width=7, fig.height=7, dev='jpeg',dev.args=list(quality=50))
-par_pre <- par(no.readonly = TRUE)
-par(lwd = 2)
+               comment=NA, verbose=TRUE, fig.width=7, fig.height=5, dev='jpeg',dev.args=list(quality=80))
 ```
 
 There are true peaks and false peaks (noise) in time series data. 
@@ -89,39 +87,98 @@ Type 3 of peak function $S_3$ computes the product of the signed distance of the
 
 $\large S_3(k,i,T)=(x_i-max(mean(N^l(k,i,T)), mean(N^r(k,i,T))))*s(N'(k,i,T))$
 
-## Boundary Condition
-
-
-
-### Reflecting Boundary Condition
-
-
-
-### Periodic Boundary Condition
-
-
-
-### Discarding Boundary
-
-
-
 ## Example of Use
 
 See the data shown below. We can see many local peaks in the data.
 
-The red points indicate the local peaks.
+The points indicate the local peaks.
 
 ```{r}
 library(scorepeak)
 data("ecgca102")
 local_peaks <- detect_localmaxima(ecgca102)
-plot(ecgca102, type = "l")
-points(which(local_peaks), ecgca102[local_peaks], pch = 19, col = "red")
+idx_true_peaks <- c(239, 255, 387, 439, 625)
+plot(ecgca102, type = "l", main = "Local Peaks")
+points(which(local_peaks), ecgca102[local_peaks], col = "red", pch = 19)
+points(idx_true_peaks, ecgca102[idx_true_peaks], col = "blue", pch = 19)
 ```
 
+Which local peaks are true peaks?
 
+It depends on your purpose.
 
+Here, assume that the blue points are true peaks and the red points indicate false peaks.
 
+Then, let's detect the true peaks.
+
+First, screen the local peaks.
+
+Second, apply a peak function (score_type1 function).
+
+```{r}
+local_peaks_screened <- detect_localmaxima(ecgca102, 13)
+score <- score_type1(ecgca102, 51)
+plot(ecgca102, type = "l", main = "Screened Local Peaks", ylim = c(-0.38, 0.53))
+points(which(local_peaks), ecgca102[local_peaks], col = "red", pch = 19)
+points(seq(length(score)), score, type = "l", col = "green")
+```
+
+Finally, binarize the screened local peaks by a threshold.
+
+```{r}
+true_peaks <- score > 0.03 & local_peaks_screened
+plot(ecgca102, type = "l", main = "Detected True Peaks")
+points(which(true_peaks), ecgca102[true_peaks], col = "blue", pch = 19)
+```
+
+Although we binarized the local peaks by the user-defined threshold value in the above,
+
+we can determine threshold value automatically by machine learning if we prepare a train set.
+
+By the way, we can combine peak function with clustering algorithm.
+
+```{r eval = requireNamespace("cluster", quietly = TRUE)}
+classified_peaks <- cluster::pam(score, 2, cluster.only = TRUE)
+cp1 <- classified_peaks == 1 & local_peaks_screened
+cp2 <- classified_peaks == 2 & local_peaks_screened
+plot(ecgca102, type = "l", main = "Classified Peaks")
+points(which(cp1), ecgca102[cp1], col = "red", pch = 19)
+points(which(cp2), ecgca102[cp2], col = "blue", pch = 19)
+```
+
+## Boundary Condition
+
+The above definitions of the peak functions are valid if $i$ is greater than $k$ and smaller than $n-k$.
+
+However, the definitions are not valid if $i$ is smaller than or equal to $k$ and greater than or equal to $n-k$.
+
+We need to consider how to treat the boundary ($k>=i,i>=n-k$).
+
+The peak functions in scorepeak package have boundary argument, which determines how to treat boundary.
+
+The valid values of boundary are shown below.
+
+* "reflecting", "r": Reflecting Boundary Condition
+
+* "periodic", "p": Periodic Boundary Condition
+
+* "discard", "d": Discarding Boundary
+
+### Reflecting Boundary Condition
+
+Extend data reflectively as follows.
+
+$T=x_n,\cdots,x_2,x_1,x_2,\cdots,x_n,x_{n-1},\cdots,x_1$
+
+### Periodic Boundary Condition
+
+Extend data periodically as follows.
+
+$T=x_1,\cdots,x_n,x_1,x_2,\cdots,x_n,x_1,\cdots,x_n$
+
+### Discarding Boundary
+
+Consider only data points that is not boundary ($k<i<n-k$).
 
 ## Building Blocks of Peak Functions
 
@@ -139,7 +196,7 @@ You can build your peak function out of building blocks shown below.
 
 * sd_neighbors: computes standard deviation of temporal neighbors
 
-The above functions have the parameter side.
+The above functions have side argument.
 
 side determines which temporal neighbors will be used in calculation.
 
@@ -158,7 +215,3 @@ The valid values of side are shown below.
 Palshikar, Girish. "Simple algorithms for peak detection in time-series." Proc. 1st Int. Conf. Advanced Data Analysis, Business Analytics and Intelligence. Vol. 122. 2009.
 
 Goldberger AL, Amaral LAN, Glass L, Hausdorff JM, Ivanov PCh, Mark RG, Mietus JE, Moody GB, Peng C-K, Stanley HE. PhysioBank, PhysioToolkit, and PhysioNet: Components of a New Research Resource for Complex Physiologic Signals. Circulation 101(23):e215-e220 [Circulation Electronic Pages; http://circ.ahajournals.org/cgi/content/full/101/23/e215]; 2000 (June 13).
-
-```{r include = FALSE}
-par(par_pre)
-```

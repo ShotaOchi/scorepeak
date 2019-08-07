@@ -16,9 +16,11 @@ Imports:
 Suggests:
     knitr,
     rmarkdown,
-    testthat (>= 2.0.0)
+    testthat (>= 2.0.0),
+    cluster
 URL: https://github.com/ShotaOchi/scorepeak
 BugReports: https://github.com/ShotaOchi/scorepeak/issues
+NeedsCompilation: yes
 LinkingTo: Rcpp
 LazyData: true
 RoxygenNote: 6.1.1
