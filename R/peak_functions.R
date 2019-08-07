@@ -43,5 +43,5 @@ score_type3 <- function(data, w, boundary = "reflecting")
   w <- assert_length_window(w, data)
   assert_boundary(boundary)
 
-  (data - max(mean_neighbors(data, w, "left", boundary), mean_neighbors(data, w, "right", boundary))) * sd_neighbors(data, w, "all", boundary)
+  (data - pmax(mean_neighbors(data, w, "left", boundary), mean_neighbors(data, w, "right", boundary))) * sd_neighbors(data, w, "all", boundary)
 }
