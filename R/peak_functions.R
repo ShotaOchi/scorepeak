@@ -9,9 +9,10 @@
 #' @export
 #' @examples
 #' data("ecgca102")
-#' score_type1(ecgca102, 11)
-#' score_type2(ecgca102, 11)
-#' score_type3(ecgca102, 11)
+#' plot(ecgca102, type = "l", ylim = c(-0.38, 0.53))
+#' points(seq(length(ecgca102)), score_type1(ecgca102, 51), col = "red", type = "l")
+#' points(seq(length(ecgca102)), score_type2(ecgca102, 51), col = "blue", type = "l")
+#' points(seq(length(ecgca102)), score_type3(ecgca102, 51), col = "green", type = "l")
 score_type1 <- function(data, w, boundary = "reflecting")
 {
   assert_data(data)
