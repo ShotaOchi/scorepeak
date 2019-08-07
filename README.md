@@ -21,6 +21,8 @@ devtools::install_github("ShotaOchi/scorepeak")
 
 ## Simple Demo
 
+A simple demo of peak detection is shown below.
+
 ```r
 library(scorepeak)
 data("ecgca102")
