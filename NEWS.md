@@ -1,8 +1,8 @@
 # scorepeak
 
-## scorepeak 0.1.1
+## scorepeak 0.1.2
 
-* fixed the typo "implemetend"
+* fixed the typo "implemetend" in description field of DESCRIPTION file
 
 ## scorepeak 0.1.1
 
