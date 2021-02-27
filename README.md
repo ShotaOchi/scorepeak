@@ -1,7 +1,6 @@
 # scorepeak
 
-[![Build Status](https://travis-ci.org/ShotaOchi/scorepeak.svg?branch=master)](https://travis-ci.org/ShotaOchi/scorepeak)
-[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/ShotaOchi/scorepeak?branch=master&svg=true)](https://ci.appveyor.com/project/ShotaOchi/scorepeak)
+[![Build Status](https://github.com/ShotaOchi/scorepeak/workflows/R-CMD-check/badge.svg)](https://github.com/ShotaOchi/scorepeak/actions)
 [![CRAN Version](https://www.r-pkg.org/badges/version/scorepeak)](https://cran.r-project.org/package=scorepeak)
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 [![codecov](https://codecov.io/gh/ShotaOchi/scorepeak/branch/master/graph/badge.svg)](https://codecov.io/gh/ShotaOchi/scorepeak)
